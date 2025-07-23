@@ -15,7 +15,7 @@ type PostgresDB struct {
 	db *sql.DB
 }
 
-func NewDBConnection(migrationSource, dbHost, dbPort, dbUser, dbPassword, dbName, sslMode string) *PostgresDB {
+func InitDBConnection(migrationSource, dbHost, dbPort, dbUser, dbPassword, dbName, sslMode string) *PostgresDB {
 	dbDSN := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", dbUser, dbPassword, dbHost, dbPort, dbName, sslMode)
 	db, err := sql.Open("pgx", dbDSN)
 	if err != nil {

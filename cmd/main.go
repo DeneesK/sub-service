@@ -9,7 +9,7 @@ import (
 func main() {
 	conf := config.MustLoad()
 
-	db := db.NewDBConnection(conf.MigrationPath,
+	db := db.InitDBConnection(conf.MigrationPath,
 		conf.DBHost, conf.DBPort,
 		conf.DBUser, conf.DBPassword,
 		conf.DBName, conf.DBSSLMode)
