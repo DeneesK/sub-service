@@ -6,7 +6,7 @@ import (
 )
 
 type Logger interface {
-	Infoln(args ...interface{})
+	Debugln(args ...interface{})
 	Errorf(template string, args ...interface{})
 	Error(args ...interface{})
 }
@@ -52,7 +52,7 @@ func NewLoggingMiddleware(log Logger) func(http.Handler) http.Handler {
 
 			duration := time.Since(start)
 
-			log.Infoln(
+			log.Debugln(
 				"uri", r.RequestURI,
 				"method", r.Method,
 				"status", responseData.status,

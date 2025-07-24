@@ -63,6 +63,7 @@ func (h *SubscriptionHandler) Get(w http.ResponseWriter, r *http.Request) {
 	}
 	sub, err := h.svc.Get(id)
 	if err != nil {
+		h.log.Warnf("sub id %s not found", id)
 		http.Error(w, "Not found", http.StatusNotFound)
 		return
 	}

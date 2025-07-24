@@ -22,10 +22,15 @@ func NewSubscriptionService(db *sqlx.DB, log *zap.SugaredLogger) *SubscriptionSe
 func (s *SubscriptionService) Create(sub *model.Subscription) error {
 	query := `INSERT INTO subscriptions (service_name, price, user_id, start_date, end_date)
               VALUES ($1, $2, $3, $4, $5) RETURNING id`
-	return s.db.QueryRow(
+	err := s.db.QueryRow(
 		query,
 		sub.ServiceName, sub.Price, sub.UserID, sub.StartDate, sub.EndDate,
 	).Scan(&sub.ID)
+	if err != nil {
+		return err
+	}
+	s.log.Debugf("created new sub %v", sub)
+	return nil
 }
 
 func (s *SubscriptionService) Get(id string) (*model.Subscription, error) {
