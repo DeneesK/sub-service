@@ -155,8 +155,8 @@ func (h *SubscriptionHandler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Description Sum prices between dates, optional filters user_id & service_name
 // @Tags subscriptions
 // @Produce json
-// @Param from query string true "Start month-year" example(2025-01)
-// @Param to query string true "End month-year"   example(2025-07)
+// @Param from query string true "Start month-year" example(01-2025)
+// @Param to query string true "End month-year"   example(07-2025)
 // @Param user_id query string false "User ID (optional)"
 // @Param service_name query string false "Service name(optional)"
 // @Success 200 {object} map[string]int
@@ -167,12 +167,12 @@ func (h *SubscriptionHandler) Aggregate(w http.ResponseWriter, r *http.Request) 
 	userID := r.URL.Query().Get("user_id")
 	serviceName := r.URL.Query().Get("service_name")
 
-	from, err := time.Parse("2006-01", fromStr)
+	from, err := time.Parse("01-2006", fromStr)
 	if err != nil {
 		http.Error(w, "invalid from", http.StatusBadRequest)
 		return
 	}
-	to, err := time.Parse("2006-01", toStr)
+	to, err := time.Parse("01-2006", toStr)
 	if err != nil {
 		http.Error(w, "invalid to", http.StatusBadRequest)
 		return
