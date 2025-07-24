@@ -47,6 +47,7 @@ http://localhost:8000/swagger/index.html
 - Документация API через Swagger
 
 - Запуск через Docker Compose
+- Автоматический запуск тестов через GitHub Actions
 
 ---
 
