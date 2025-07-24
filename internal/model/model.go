@@ -54,7 +54,7 @@ type Subscription struct {
 	Price       int        `db:"price" json:"price"`
 	UserID      string     `db:"user_id" json:"user_id"`
 	StartDate   MonthYear  `db:"start_date" json:"start_date" swaggertype:"string"`
-	EndDate     *MonthYear `db:"end_date" json:"end_date,omitempty"`
+	EndDate     *MonthYear `db:"end_date" json:"end_date,omitempty" swaggertype:"string"`
 }
 
 // UpdateSubscription swagger:model

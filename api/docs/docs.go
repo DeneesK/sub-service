@@ -255,19 +255,11 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.MonthYear": {
-            "type": "object",
-            "properties": {
-                "time.Time": {
-                    "type": "string"
-                }
-            }
-        },
         "model.Subscription": {
             "type": "object",
             "properties": {
                 "end_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "id": {
                     "type": "string"
