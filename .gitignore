@@ -12,7 +12,7 @@
 main
 server
 
-# Dependency directories (remove the comment below to include it)
+# Dependency directories
 vendor/
 
 # IDEs directories
@@ -21,6 +21,8 @@ vendor/
 
 # MacOS
 .DS_Store
+
+# ENV
 .env
 
 # Static

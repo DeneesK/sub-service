@@ -7,7 +7,7 @@ import (
 )
 
 type Config struct {
-	HTTPPort      string `envconfig:"HTTP_PORT" default:"8080"`
+	ServerAddr    string `envconfig:"SERVER_ADDR" default:"localhost:8080"`
 	DBHost        string `envconfig:"DB_HOST" default:"localhost"`
 	DBPort        string `envconfig:"DB_PORT" default:"5432"`
 	DBUser        string `envconfig:"DB_USER" default:"postgres"`
