@@ -101,7 +101,7 @@ func (h *SubscriptionHandler) List(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} model.Subscription
 // @Failure 400 {string} string "Bad Request"
 // @Failure 404 {string} string "Not Found"
-// @Router /subs/{id} [put]
+// @Router /subs/{id} [patch]
 func (h *SubscriptionHandler) Update(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {

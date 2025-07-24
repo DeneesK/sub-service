@@ -124,7 +124,7 @@ paths:
       summary: Get subscription
       tags:
       - subscriptions
-    put:
+    patch:
       consumes:
       - application/json
       description: Update subscription by its id
