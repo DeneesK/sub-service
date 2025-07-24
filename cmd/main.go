@@ -8,6 +8,11 @@ import (
 	"github.com/DeneesK/sub-service/pkg/logger"
 )
 
+// @title Subscription API
+// @version 1.0
+// @description API for managing subscriptions
+// @host localhost:8080
+// @BasePath /api/v1
 func main() {
 	conf := config.MustLoad()
 

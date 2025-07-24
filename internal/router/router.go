@@ -3,10 +3,12 @@ package router
 import (
 	"time"
 
+	_ "github.com/DeneesK/sub-service/api/docs"
 	"github.com/DeneesK/sub-service/internal/model"
 	"github.com/DeneesK/sub-service/internal/router/middlewares"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"go.uber.org/zap"
 )
 
@@ -29,7 +31,7 @@ func NewRouter(timeOut time.Duration, subService SubService, log *zap.SugaredLog
 	r.Use(middleware.Timeout(timeOut * time.Second))
 
 	h := NewSubscriptionHandler(subService, log)
-
+	r.Get("/swagger/*", httpSwagger.WrapHandler)
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Post("/subs", h.Create)
 		r.Get("/subs", h.List)

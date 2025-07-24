@@ -28,7 +28,7 @@ func NewSubscriptionHandler(svc SubService, log *zap.SugaredLogger) *Subscriptio
 // @Tags subscriptions
 // @Accept json
 // @Produce json
-// @Param subscription body model.Subscription true
+// @Param subscription body model.Subscription true "Subscription object"
 // @Success 201 {object} model.Subscription
 // @Router /api/v1/subscriptions [post]
 func (h *SubscriptionHandler) Create(w http.ResponseWriter, r *http.Request) {
@@ -51,8 +51,8 @@ func (h *SubscriptionHandler) Create(w http.ResponseWriter, r *http.Request) {
 // @Description Get subscription by its id
 // @Tags subscriptions
 // @Produce json
-// @Param id query string true
-// @Param subscription body model.Subscription true
+// @Param id query string true "Subscription id"
+// @Param subscription body model.Subscription true "Subscription object"
 // @Success 200 {object} model.Subscription
 // @Router /api/v1/subs/{id} [get]
 func (h *SubscriptionHandler) Get(w http.ResponseWriter, r *http.Request) {
@@ -70,12 +70,11 @@ func (h *SubscriptionHandler) Get(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(sub)
 }
 
-// ListSubscription
 // @Summary Get list of subscriptions
-// @Description Get list of subscriptions by user_id if user_id is empty returns all subs
+// @Description Get list of subscriptions by user_id. If user_id is empty returns all subs
 // @Tags subscriptions
 // @Produce json
-// @Param user_id query string false
+// @Param user_id query string false "User ID (optional)"
 // @Success 200 {array} model.Subscription
 // @Router /api/v1/subs [get]
 func (h *SubscriptionHandler) List(w http.ResponseWriter, r *http.Request) {
@@ -97,7 +96,7 @@ func (h *SubscriptionHandler) List(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Subscription ID"
-// @Param subscription body model.Subscription true
+// @Param subscription body model.Subscription true "Subscription object"
 // @Success 200 {object} model.Subscription
 // @Failure 400 {string} string "Bad Request"
 // @Failure 404 {string} string "Not Found"
@@ -158,8 +157,8 @@ func (h *SubscriptionHandler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Param from query string true "Start month-year" example(2025-01)
 // @Param to query string true "End month-year"   example(2025-07)
-// @Param user_id query string false
-// @Param service_name query string false
+// @Param user_id query string false "User ID (optional)"
+// @Param service_name query string false "Service name(optional)"
 // @Success 200 {object} map[string]int
 // @Router /api/v1/subs/aggregate [get]
 func (h *SubscriptionHandler) Aggregate(w http.ResponseWriter, r *http.Request) {
