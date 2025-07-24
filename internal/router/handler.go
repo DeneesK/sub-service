@@ -96,7 +96,7 @@ func (h *SubscriptionHandler) List(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Subscription ID"
-// @Param subscription body model.Subscription true "Subscription object"
+// @Param subscription body model.UpdateSubscription true "UpdateSubscription object"
 // @Success 200 {object} model.Subscription
 // @Failure 400 {string} string "Bad Request"
 // @Failure 404 {string} string "Not Found"
@@ -108,13 +108,12 @@ func (h *SubscriptionHandler) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req model.Subscription
+	var req model.UpdateSubscription
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	req.ID = id
 	if err := h.svc.Update(id, &req); err != nil {
 		h.log.Error("update error", zap.Error(err))
 		http.Error(w, "not found", http.StatusNotFound)

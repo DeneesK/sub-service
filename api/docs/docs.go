@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/subs": {
+        "/subs": {
             "get": {
                 "description": "Get list of subscriptions by user_id. If user_id is empty returns all subs",
                 "produces": [
@@ -44,9 +44,41 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Create a new subscription record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Create subscription",
+                "parameters": [
+                    {
+                        "description": "Subscription object",
+                        "name": "subscription",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Subscription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Subscription"
+                        }
+                    }
+                }
             }
         },
-        "/api/v1/subs/aggregate": {
+        "/subs/aggregate": {
             "get": {
                 "description": "Sum prices between dates, optional filters user_id \u0026 service_name",
                 "produces": [
@@ -99,7 +131,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/subs/{id}": {
+        "/subs/{id}": {
             "get": {
                 "description": "Get subscription by its id",
                 "produces": [
@@ -157,12 +189,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "Subscription object",
+                        "description": "UpdateSubscription object",
                         "name": "subscription",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Subscription"
+                            "$ref": "#/definitions/model.UpdateSubscription"
                         }
                     }
                 ],
@@ -220,48 +252,22 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/api/v1/subscriptions": {
-            "post": {
-                "description": "Create a new subscription record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subscriptions"
-                ],
-                "summary": "Create subscription",
-                "parameters": [
-                    {
-                        "description": "Subscription object",
-                        "name": "subscription",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.Subscription"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.Subscription"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
+        "model.MonthYear": {
+            "type": "object",
+            "properties": {
+                "time.Time": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Subscription": {
             "type": "object",
             "properties": {
                 "end_date": {
-                    "type": "string"
+                    "$ref": "#/definitions/model.MonthYear"
                 },
                 "id": {
                     "type": "string"
@@ -273,8 +279,27 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "start_date": {
-                    "description": "YYYY-MM-DD",
+                    "$ref": "#/definitions/model.MonthYear"
+                },
+                "user_id": {
                     "type": "string"
+                }
+            }
+        },
+        "model.UpdateSubscription": {
+            "type": "object",
+            "properties": {
+                "end_date": {
+                    "$ref": "#/definitions/model.MonthYear"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "service_name": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "$ref": "#/definitions/model.MonthYear"
                 },
                 "user_id": {
                     "type": "string"

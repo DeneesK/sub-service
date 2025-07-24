@@ -19,7 +19,7 @@ type SubService interface {
 	Create(sub *model.Subscription) error
 	Get(id string) (*model.Subscription, error)
 	List(userID string) ([]model.Subscription, error)
-	Update(id string, upd *model.Subscription) error
+	Update(id string, upd *model.UpdateSubscription) error
 	Delete(id string) error
 	Aggregate(from, to time.Time, userID, service string) (int, error)
 }

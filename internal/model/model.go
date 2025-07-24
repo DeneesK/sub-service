@@ -56,3 +56,12 @@ type Subscription struct {
 	StartDate   MonthYear  `db:"start_date" json:"start_date"`
 	EndDate     *MonthYear `db:"end_date" json:"end_date,omitempty"`
 }
+
+// UpdateSubscription swagger:model
+type UpdateSubscription struct {
+	ServiceName *string    `db:"service_name" json:"service_name,omitempty"`
+	Price       *int       `db:"price" json:"price,omitempty"`
+	UserID      *string    `db:"user_id" json:"user_id,omitempty"`
+	StartDate   *MonthYear `db:"start_date" json:"start_date,omitempty"`
+	EndDate     *MonthYear `db:"end_date" json:"end_date,omitempty"`
+}

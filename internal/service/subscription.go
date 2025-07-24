@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/DeneesK/sub-service/internal/model"
@@ -48,24 +49,37 @@ func (s *SubscriptionService) List(userID string) ([]model.Subscription, error) 
 	return subs, err
 }
 
-func (s *SubscriptionService) Update(id string, upd *model.Subscription) error {
-	_, err := s.db.NamedExec(
-		`UPDATE subscriptions SET
-            service_name=:service_name,
-            price=:price,
-            user_id=:user_id,
-            start_date=:start_date,
-            end_date=:end_date
-         WHERE id=:id`,
-		map[string]interface{}{
-			"id":           id,
-			"service_name": upd.ServiceName,
-			"price":        upd.Price,
-			"user_id":      upd.UserID,
-			"start_date":   upd.StartDate,
-			"end_date":     upd.EndDate,
-		},
-	)
+func (s *SubscriptionService) Update(id string, upd *model.UpdateSubscription) error {
+	setClauses := []string{}
+	args := map[string]interface{}{"id": id}
+
+	if upd.ServiceName != nil {
+		setClauses = append(setClauses, "service_name=:service_name")
+		args["service_name"] = *upd.ServiceName
+	}
+	if upd.Price != nil {
+		setClauses = append(setClauses, "price=:price")
+		args["price"] = *upd.Price
+	}
+	if upd.UserID != nil {
+		setClauses = append(setClauses, "user_id=:user_id")
+		args["user_id"] = *upd.UserID
+	}
+	if upd.StartDate != nil {
+		setClauses = append(setClauses, "start_date=:start_date")
+		args["start_date"] = *upd.StartDate
+	}
+	if upd.EndDate != nil {
+		setClauses = append(setClauses, "end_date=:end_date")
+		args["end_date"] = *upd.EndDate
+	}
+
+	if len(setClauses) == 0 {
+		return nil
+	}
+
+	query := fmt.Sprintf(`UPDATE subscriptions SET %s WHERE id=:id`, strings.Join(setClauses, ", "))
+	_, err := s.db.NamedExec(query, args)
 	return err
 }
 

@@ -1,9 +1,14 @@
 basePath: /api/v1
 definitions:
+  model.MonthYear:
+    properties:
+      time.Time:
+        type: string
+    type: object
   model.Subscription:
     properties:
       end_date:
-        type: string
+        $ref: '#/definitions/model.MonthYear'
       id:
         type: string
       price:
@@ -11,8 +16,20 @@ definitions:
       service_name:
         type: string
       start_date:
-        description: YYYY-MM-DD
+        $ref: '#/definitions/model.MonthYear'
+      user_id:
         type: string
+    type: object
+  model.UpdateSubscription:
+    properties:
+      end_date:
+        $ref: '#/definitions/model.MonthYear'
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        $ref: '#/definitions/model.MonthYear'
       user_id:
         type: string
     type: object
@@ -23,7 +40,7 @@ info:
   title: Subscription API
   version: "1.0"
 paths:
-  /api/v1/subs:
+  /subs:
     get:
       description: Get list of subscriptions by user_id. If user_id is empty returns
         all subs
@@ -44,7 +61,28 @@ paths:
       summary: Get list of subscriptions
       tags:
       - subscriptions
-  /api/v1/subs/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Create a new subscription record
+      parameters:
+      - description: Subscription object
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/model.Subscription'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Subscription'
+      summary: Create subscription
+      tags:
+      - subscriptions
+  /subs/{id}:
     delete:
       description: Delete subscription by its id
       parameters:
@@ -101,12 +139,12 @@ paths:
         name: id
         required: true
         type: string
-      - description: Subscription object
+      - description: UpdateSubscription object
         in: body
         name: subscription
         required: true
         schema:
-          $ref: '#/definitions/model.Subscription'
+          $ref: '#/definitions/model.UpdateSubscription'
       produces:
       - application/json
       responses:
@@ -125,7 +163,7 @@ paths:
       summary: Update subscription
       tags:
       - subscriptions
-  /api/v1/subs/aggregate:
+  /subs/aggregate:
     get:
       description: Sum prices between dates, optional filters user_id & service_name
       parameters:
@@ -159,28 +197,6 @@ paths:
               type: integer
             type: object
       summary: Aggregate subscriptions cost
-      tags:
-      - subscriptions
-  /api/v1/subscriptions:
-    post:
-      consumes:
-      - application/json
-      description: Create a new subscription record
-      parameters:
-      - description: Subscription object
-        in: body
-        name: subscription
-        required: true
-        schema:
-          $ref: '#/definitions/model.Subscription'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.Subscription'
-      summary: Create subscription
       tags:
       - subscriptions
 swagger: "2.0"
