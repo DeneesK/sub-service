@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql/driver"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -31,6 +32,19 @@ func (my MonthYear) MarshalJSON() ([]byte, error) {
 
 func (my MonthYear) Value() (driver.Value, error) {
 	return my.Time, nil
+}
+
+func (my *MonthYear) Scan(value interface{}) error {
+	if value == nil {
+		*my = MonthYear{}
+		return nil
+	}
+	t, ok := value.(time.Time)
+	if !ok {
+		return fmt.Errorf("cannot convert %T to time.Time", value)
+	}
+	my.Time = t
+	return nil
 }
 
 // Subscription swagger:model
