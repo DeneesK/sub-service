@@ -58,7 +58,7 @@ http://localhost:8000/swagger/index.html
 | POST  | `/api/v1/subs`               | Создать новую подписку                      |
 | GET   | `/api/v1/subs/{id}`          | Получить подписку по ID                     |
 | GET   | `/api/v1/subs?user_id=...`  | Список подписок, опциональный фильтр по пользователю |
-| PUT   | `/api/v1/subs/{id}`          | Обновить подписку                           |
+| PATCH   | `/api/v1/subs/{id}`          | Обновить подписку                           |
 | DELETE| `/api/v1/subs/{id}`          | Удалить подписку                            |
 | GET   | `/api/v1/subs/aggregate`     | Получить сумму стоимости подписок за период с фильтрами |
 
