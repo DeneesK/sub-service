@@ -35,10 +35,10 @@ func (my MonthYear) Value() (driver.Value, error) {
 
 // Subscription swagger:model
 type Subscription struct {
-	ID          string    `db:"id" json:"id"`
-	ServiceName string    `db:"service_name" json:"service_name"`
-	Price       int       `db:"price" json:"price"`
-	UserID      string    `db:"user_id" json:"user_id"`
-	StartDate   MonthYear `db:"start_date" json:"start_date"`
-	EndDate     MonthYear `db:"end_date,omitempty" json:"end_date,omitempty"`
+	ID          string     `db:"id" json:"id"`
+	ServiceName string     `db:"service_name" json:"service_name"`
+	Price       int        `db:"price" json:"price"`
+	UserID      string     `db:"user_id" json:"user_id"`
+	StartDate   MonthYear  `db:"start_date" json:"start_date"`
+	EndDate     *MonthYear `db:"end_date" json:"end_date,omitempty"`
 }
