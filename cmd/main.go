@@ -26,6 +26,6 @@ func main() {
 	log.Info("DB initialized successfully")
 	subService := service.NewSubscriptionService(db, log)
 
-	a := app.NewApp()
-
+	a := app.NewApp(conf.ServerAddr, log, subService)
+	a.Run()
 }

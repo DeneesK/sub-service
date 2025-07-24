@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 
+	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -16,6 +17,12 @@ type Config struct {
 	DBSSLMode     string `envconfig:"DB_SSLMODE" default:"disable"`
 	LogLevel      string `envconfig:"LOG_LEVEL" default:"debug"`
 	MigrationPath string `envconfig:"MIGRATION_PATH" default:"file://migrations"`
+}
+
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env found, using environment variables")
+	}
 }
 
 func MustLoad() Config {
