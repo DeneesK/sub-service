@@ -1,6 +1,32 @@
 package model
 
-import "time"
+import (
+	"strings"
+	"time"
+)
+
+type MonthYear struct {
+	time.Time
+}
+
+const myLayout = "01-2006" // MM-YYYY
+
+func (my *MonthYear) UnmarshalJSON(data []byte) error {
+	s := strings.Trim(string(data), `"`)
+	if s == "" {
+		return nil
+	}
+	t, err := time.Parse(myLayout, s)
+	if err != nil {
+		return err
+	}
+	my.Time = t
+	return nil
+}
+
+func (my MonthYear) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + my.Time.Format(myLayout) + `"`), nil
+}
 
 // Subscription swagger:model
 type Subscription struct {
@@ -8,6 +34,6 @@ type Subscription struct {
 	ServiceName string    `db:"service_name" json:"service_name"`
 	Price       int       `db:"price" json:"price"`
 	UserID      string    `db:"user_id" json:"user_id"`
-	StartDate   time.Time `db:"start_date" json:"start_date"` // YYYY-MM-DD
-	EndDate     time.Time `db:"end_date,omitempty" json:"end_date,omitempty"`
+	StartDate   MonthYear `db:"start_date" json:"start_date"`
+	EndDate     MonthYear `db:"end_date,omitempty" json:"end_date,omitempty"`
 }
