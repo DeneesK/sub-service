@@ -33,9 +33,18 @@ func (s *SubscriptionService) Get(id string) (*model.Subscription, error) {
 	return &sub, err
 }
 
-func (s *SubscriptionService) List() ([]model.Subscription, error) {
+func (s *SubscriptionService) List(userID string) ([]model.Subscription, error) {
 	var subs []model.Subscription
-	err := s.db.Select(&subs, "SELECT * FROM subscriptions ORDER BY start_date DESC")
+	var err error
+
+	if userID == "" {
+		query := `SELECT * FROM subscriptions ORDER BY start_date DESC`
+		err = s.db.Select(&subs, query)
+	} else {
+		query := `SELECT * FROM subscriptions WHERE user_id = $1 ORDER BY start_date DESC`
+		err = s.db.Select(&subs, query, userID)
+	}
+
 	return subs, err
 }
 

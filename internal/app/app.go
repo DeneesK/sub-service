@@ -18,7 +18,7 @@ const shutdownTimeout = time.Second * 1
 type SubService interface {
 	Create(sub *model.Subscription) error
 	Get(id string) (*model.Subscription, error)
-	List() ([]model.Subscription, error)
+	List(userID string) ([]model.Subscription, error)
 	Update(id string, upd *model.Subscription) error
 	Delete(id string) error
 	Aggregate(from, to time.Time, userID, service string) (int, error)
@@ -30,8 +30,8 @@ type APP struct {
 	subService SubService
 }
 
-func NewApp(addr string, log *zap.SugaredLogger, subService SubService) *APP {
-	r := router.NewRouter()
+func NewApp(addr string, timeOut time.Duration, log *zap.SugaredLogger, subService SubService) *APP {
+	r := router.NewRouter(timeOut, subService, log)
 	s := http.Server{
 		Addr:    addr,
 		Handler: r,

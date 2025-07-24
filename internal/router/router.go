@@ -13,7 +13,7 @@ import (
 type SubService interface {
 	Create(sub *model.Subscription) error
 	Get(id string) (*model.Subscription, error)
-	List() ([]model.Subscription, error)
+	List(userID string) ([]model.Subscription, error)
 	Update(id string, upd *model.Subscription) error
 	Delete(id string) error
 	Aggregate(from, to time.Time, userID, service string) (int, error)
@@ -32,10 +32,10 @@ func NewRouter(timeOut time.Duration, subService SubService, log *zap.SugaredLog
 
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Post("/subs", h.Create)
-		// r.Get("/subs", h.List)
-		// r.Get("/subs/{id}", h.Get)
-		// r.Put("/subs/{id}", h.Update)
-		// r.Delete("/subs/{id}", h.Delete)
+		r.Get("/subs", h.List)
+		r.Get("/subs/{id}", h.Get)
+		r.Put("/subs/{id}", h.Update)
+		r.Delete("/subs/{id}", h.Delete)
 		r.Get("/subs/aggregate", h.Aggregate)
 	})
 	return r
