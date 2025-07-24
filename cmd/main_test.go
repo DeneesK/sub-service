@@ -252,7 +252,7 @@ func TestAggregateSubscription(t *testing.T) {
 		StartDate:   model.MonthYear{Time: time.Date(2025, 2, 1, 0, 0, 0, 0, time.UTC)},
 	})
 
-	url := "/api/v1/subs/aggregate?from=2025-01&to=2025-02&user_id=user-5&service_name=Netflix"
+	url := "/api/v1/subs/aggregate?from=01-2020&to=02-2025&user_id=user-5&service_name=Netflix"
 	req := httptest.NewRequest(http.MethodGet, url, nil)
 	w := httptest.NewRecorder()
 
