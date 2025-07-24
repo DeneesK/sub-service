@@ -279,7 +279,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "start_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "user_id": {
                     "type": "string"
@@ -290,7 +290,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "end_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "price": {
                     "type": "integer"
@@ -299,7 +299,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "start_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "user_id": {
                     "type": "string"

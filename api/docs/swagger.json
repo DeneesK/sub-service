@@ -273,7 +273,7 @@
                     "type": "string"
                 },
                 "start_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "user_id": {
                     "type": "string"
@@ -284,7 +284,7 @@
             "type": "object",
             "properties": {
                 "end_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "price": {
                     "type": "integer"
@@ -293,7 +293,7 @@
                     "type": "string"
                 },
                 "start_date": {
-                    "$ref": "#/definitions/model.MonthYear"
+                    "type": "string"
                 },
                 "user_id": {
                     "type": "string"
