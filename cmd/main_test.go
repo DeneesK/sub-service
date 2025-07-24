@@ -199,7 +199,7 @@ func TestUpdateSubscription(t *testing.T) {
 	body, _ := json.Marshal(updatePayload)
 
 	url := "/api/v1/subs/" + sub.ID
-	req := httptest.NewRequest(http.MethodPut, url, bytes.NewBuffer(body))
+	req := httptest.NewRequest(http.MethodPatch, url, bytes.NewBuffer(body))
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 

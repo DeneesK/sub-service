@@ -36,7 +36,7 @@ func NewRouter(timeOut time.Duration, subService SubService, log *zap.SugaredLog
 		r.Post("/subs", h.Create)
 		r.Get("/subs", h.List)
 		r.Get("/subs/{id}", h.Get)
-		r.Put("/subs/{id}", h.Update)
+		r.Patch("/subs/{id}", h.Update)
 		r.Delete("/subs/{id}", h.Delete)
 		r.Get("/subs/aggregate", h.Aggregate)
 	})
