@@ -1,4 +1,4 @@
-name: zip-downloader tests
+name: sub-service tests
 
 on:
   push:
