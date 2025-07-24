@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql/driver"
 	"strings"
 	"time"
 )
@@ -9,14 +10,14 @@ type MonthYear struct {
 	time.Time
 }
 
-const myLayout = "01-2006" // MM-YYYY
+const dataLayout = "01-2006" // MM-YYYY
 
 func (my *MonthYear) UnmarshalJSON(data []byte) error {
 	s := strings.Trim(string(data), `"`)
 	if s == "" {
 		return nil
 	}
-	t, err := time.Parse(myLayout, s)
+	t, err := time.Parse(dataLayout, s)
 	if err != nil {
 		return err
 	}
@@ -25,7 +26,11 @@ func (my *MonthYear) UnmarshalJSON(data []byte) error {
 }
 
 func (my MonthYear) MarshalJSON() ([]byte, error) {
-	return []byte(`"` + my.Time.Format(myLayout) + `"`), nil
+	return []byte(`"` + my.Time.Format(dataLayout) + `"`), nil
+}
+
+func (my MonthYear) Value() (driver.Value, error) {
+	return my.Time, nil
 }
 
 // Subscription swagger:model
