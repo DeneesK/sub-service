@@ -23,6 +23,6 @@ RUN apk add --no-cache ca-certificates
 
 WORKDIR /root/
 
-COPY ./migrations .
+COPY ./migrations ./migrations
 COPY --from=builder /app/app .
 COPY --from=builder /app/api/docs ./api/docs

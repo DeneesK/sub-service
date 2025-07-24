@@ -11,7 +11,7 @@ import (
 // @title Subscription API
 // @version 1.0
 // @description API for managing subscriptions
-// @host localhost:8080
+// @host localhost:8000
 // @BasePath /api/v1
 func main() {
 	conf := config.MustLoad()
