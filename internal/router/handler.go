@@ -30,7 +30,7 @@ func NewSubscriptionHandler(svc SubService, log *zap.SugaredLogger) *Subscriptio
 // @Produce json
 // @Param subscription body model.Subscription true "Subscription object"
 // @Success 201 {object} model.Subscription
-// @Router /api/v1/subscriptions [post]
+// @Router /api/v1/subs [post]
 func (h *SubscriptionHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req model.Subscription
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
