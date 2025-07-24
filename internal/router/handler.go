@@ -30,7 +30,7 @@ func NewSubscriptionHandler(svc SubService, log *zap.SugaredLogger) *Subscriptio
 // @Produce json
 // @Param subscription body model.Subscription true "Subscription object"
 // @Success 201 {object} model.Subscription
-// @Router /api/v1/subs [post]
+// @Router /subs [post]
 func (h *SubscriptionHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req model.Subscription
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -54,7 +54,7 @@ func (h *SubscriptionHandler) Create(w http.ResponseWriter, r *http.Request) {
 // @Param id query string true "Subscription id"
 // @Param subscription body model.Subscription true "Subscription object"
 // @Success 200 {object} model.Subscription
-// @Router /api/v1/subs/{id} [get]
+// @Router /subs/{id} [get]
 func (h *SubscriptionHandler) Get(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {
@@ -76,7 +76,7 @@ func (h *SubscriptionHandler) Get(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Param user_id query string false "User ID (optional)"
 // @Success 200 {array} model.Subscription
-// @Router /api/v1/subs [get]
+// @Router /subs [get]
 func (h *SubscriptionHandler) List(w http.ResponseWriter, r *http.Request) {
 	userID := r.URL.Query().Get("user_id")
 	subs, err := h.svc.List(userID)
@@ -100,7 +100,7 @@ func (h *SubscriptionHandler) List(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} model.Subscription
 // @Failure 400 {string} string "Bad Request"
 // @Failure 404 {string} string "Not Found"
-// @Router /api/v1/subs/{id} [put]
+// @Router /subs/{id} [put]
 func (h *SubscriptionHandler) Update(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {
@@ -133,7 +133,7 @@ func (h *SubscriptionHandler) Update(w http.ResponseWriter, r *http.Request) {
 // @Param id path string true "Subscription ID"
 // @Success 204 {string} string "No Content"
 // @Failure 404 {string} string "Not Found"
-// @Router /api/v1/subs/{id} [delete]
+// @Router /subs/{id} [delete]
 func (h *SubscriptionHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {
@@ -160,7 +160,7 @@ func (h *SubscriptionHandler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Param user_id query string false "User ID (optional)"
 // @Param service_name query string false "Service name(optional)"
 // @Success 200 {object} map[string]int
-// @Router /api/v1/subs/aggregate [get]
+// @Router /subs/aggregate [get]
 func (h *SubscriptionHandler) Aggregate(w http.ResponseWriter, r *http.Request) {
 	fromStr := r.URL.Query().Get("from")
 	toStr := r.URL.Query().Get("to")
